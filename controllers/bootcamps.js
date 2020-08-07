@@ -19,20 +19,14 @@ exports.getBootcamps = async (req, res, next) => {
 // GET /api/v1/bootcamps/:id
 // Public
 exports.getBootcamp = async (req, res, next) => {
-  try {
-    const bootcamp = await Bootcamp.findById(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id);
 
-    // if id formatted but now in the db
-    if (!bootcamp) {
-      return next(
-        new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
-      );
-    }
-    res.status(200).json({ success: true, data: bootcamp });
-    // if id is not formatted
-  } catch (err) {
-    next(err);
+  if (!bootcamp) {
+    return next(
+      new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
+    );
   }
+  res.status(200).json({ success: true, data: bootcamp });
 };
 
 // Create a bootcamp
@@ -46,7 +40,7 @@ exports.createBootcamp = async (req, res, next) => {
       success: true,
       data: bootcamp
     });
-  } catch (error) {
+  } catch (err) {
     next(err);
   }
 };
