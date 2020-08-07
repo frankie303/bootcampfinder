@@ -17,17 +17,21 @@ const BootcampSchema = new mongoose.Schema({
   website: {
     type: String,
     match: [
-      https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)
-    , 'Please use a valid URL with HTTP or HTTPS']
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+
+      'Please use a valid URL with HTTP or HTTPS'
+    ]
   },
-  phone:{
+  phone: {
     type: String,
-    maxlength:[20, 'Phone number can not be longer than 20 characters']
+    maxlength: [20, 'Phone number can not be longer than 20 characters']
   },
-  email:{
+  email: {
     type: String,
-    match:[/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/],
-    'Please add a valid email'
+    match: [
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      'Please add a valid email'
+    ]
   },
   address: {
     type: String,
@@ -37,12 +41,10 @@ const BootcampSchema = new mongoose.Schema({
     // GeoJSON Point
     type: {
       type: String,
-      enum: ['Point'],
-      required: true
+      enum: ['Point']
     },
     coordinates: {
       type: [Number],
-      required: true,
       index: '2dsphere'
     },
     formattedAddress: String,
@@ -97,4 +99,4 @@ const BootcampSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Bootcamp', BootcampSchema)
+module.exports = mongoose.model('Bootcamp', BootcampSchema);
